@@ -2,7 +2,7 @@ security:
   oauth2:
     client:
       clientId: ${ms.clientId}
-      clientSecret: <ms.clientSecret>
+      clientSecret: ${ms.clientSecret}
       accessTokenUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/token
       userAuthorizationUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/authorize
       clientAuthenticationScheme: form
