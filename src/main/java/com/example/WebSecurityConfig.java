@@ -20,21 +20,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AzureAdJwtAuthenticationTokenFilter azureAdJwtAuthenticationTokenFilter;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity security) throws Exception {
 
         // allow access if we stored our front-end pages in the same project.
         // if the static pages are hosted somewhere else, ignore this line.
-        http.authorizeRequests().antMatchers("/").permitAll();
+        security.authorizeRequests().antMatchers("/").permitAll();
 
         // we only host RESTful API and every services are protected.
-        http.authorizeRequests().anyRequest().authenticated();
+        security.authorizeRequests().anyRequest().authenticated();
 
         // we are using token based authentication. csrf is not required.
-        http.csrf().disable();
+        security.csrf().disable();
 
         // need a filter to validate the Jwt token from AzureAD and assign roles.
         // without this, the token will not be validated and the role is always ROLE_USER.
-        http.addFilterBefore(azureAdJwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        security.addFilterBefore(azureAdJwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         
         // the following code handle preflight messages so ajax calls will work...
 
@@ -67,6 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfigSource.registerCorsConfiguration("/**", corsConfig);
 
         // this is required to handle preflight message...
-        http.addFilterBefore(new CorsFilter(corsConfigSource), ChannelProcessingFilter.class);
+        security.addFilterBefore(new CorsFilter(corsConfigSource), ChannelProcessingFilter.class);
     }
 }

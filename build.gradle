@@ -31,6 +31,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.auth0:java-jwt:3.1.0')
     compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.json:json:20160810")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

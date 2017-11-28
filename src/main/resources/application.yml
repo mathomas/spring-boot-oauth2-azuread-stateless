@@ -1,0 +1,18 @@
+security:
+  oauth2:
+    client:
+      clientId: ${ms.clientId}
+      clientSecret: <ms.clientSecret>
+      accessTokenUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/token
+      userAuthorizationUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/authorize
+      clientAuthenticationScheme: form
+      scope: openid
+    resource:
+      userInfoUri: https://graph.windows.net/me?api-version=1.6
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG

@@ -63,20 +63,20 @@
             console.log('ADAL error occurred: ' + error);
             return;
           }
-  
+
           var headers = new Headers({
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json;charset=UTF-8',
             'Authorization': 'Bearer ' + token
           });
-  
+
           var params = {
             method: 'GET',
             headers: headers
           };
   
           // change the user to where your service is
-          fetch('http://localhost/users', params).then((response) => {
+          fetch('http://localhost:8080/users', params).then((response) => {
             console.log('response.status', response.status);
             console.log('response.body', response.body);
             return response.json();
@@ -88,7 +88,7 @@
           });
         });
       }
-      
+
       function callApiWithoutToken() {
         var headers = new Headers({
           'Accept': 'application/json;charset=UTF-8',
@@ -101,7 +101,7 @@
         };
 
         // change the user to where your service is
-        fetch('http://localhost/users', params).then((response) => {
+        fetch('http://localhost:8080/users', params).then((response) => {
           console.log('response.status', response.status);
           console.log('response.body', response.body);
           return response.json();
