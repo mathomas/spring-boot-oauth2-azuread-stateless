@@ -3,13 +3,21 @@ security:
     client:
       clientId: ${ms.clientId}
       clientSecret: ${ms.clientSecret}
-      accessTokenUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/token
-      userAuthorizationUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/authorize
+      # From Authorization Server's metadata
+      accessTokenUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/v2.0/token
+      userAuthorizationUri: https://login.microsoftonline.com/${ms.tenant}/oauth2/v2.0/authorize
       clientAuthenticationScheme: form
-      scope: openid
+      scope:
+        - openid
+        - profile
+        - email
     resource:
-      userInfoUri: https://graph.windows.net/me?api-version=1.6
-
+      # from your Auth Server's metadata, check .well-known/openid-configuration
+      # if not in .well-known/oauth-authorization-server
+      userInfoUri: https://graph.microsoft.com/me
+      jwk:
+        key-set-uri: https://login.microsoftonline.com/${ms.tenant}/discovery/v2.0/keys
+      #preferTokenInfo: false
 server:
   port: 8080
 

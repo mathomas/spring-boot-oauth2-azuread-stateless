@@ -13,13 +13,11 @@ Pass JVM params to set Microsoft client and tenant info for server side:
  `-Dms.tenant=<AD tenant>`
 
 Note that Javascript in `index.html` must be updated manually, still :-(.
-See azureConfig object's `tenant` and `clientId`.
+See `azureConfig` object's `tenant` and `clientId`.
 
 
 # Todos
 There seems to be a minor bug that this app will attempt to use unauthorized resource /user before login and will be stopped from redirecting.  We see an error in JavaScript console.
-
-The logout function only logout from Spring App, not logout from AzureAD.
 
 Externalize `tenant` and `clientId` from `index.html`/Javascript. 
 
