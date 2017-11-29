@@ -1,15 +1,5 @@
 package com.example;
 
-import java.io.IOException;
-import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -19,6 +9,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -74,7 +73,7 @@ public class AzureAdJwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     authentication.setAuthenticated(true);
                     log.info("Request token verification success. {}", authentication);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    
+
                 } catch (CertificateException e) {
                     throw new RuntimeException(e);
                 } catch (Exception e) {

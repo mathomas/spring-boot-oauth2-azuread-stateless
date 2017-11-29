@@ -1,11 +1,11 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -16,8 +16,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // enabling the authorization check before each service call.
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AzureAdJwtAuthenticationTokenFilter azureAdJwtAuthenticationTokenFilter;
 
     @Override
     protected void configure(HttpSecurity security) throws Exception {
@@ -34,8 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // need a filter to validate the Jwt token from AzureAD and assign roles.
         // without this, the token will not be validated and the role is always ROLE_USER.
-        security.addFilterBefore(azureAdJwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        
+        security.addFilterBefore(
+                new JwtAuthorizationFilter(authenticationManager()),
+                UsernamePasswordAuthenticationFilter.class);
+        security.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
         // the following code handle preflight messages so ajax calls will work...
 
         // prepare cors config
